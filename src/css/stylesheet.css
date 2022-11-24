@@ -8,8 +8,34 @@ body::-webkit-scrollbar-thumb {
   background-color: #a1a1a1;
 }
 
-wi::-webkit-scrollbar-track {
+body::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.2);
   border-radius: 10px;
   background-color: #212529;
+}
+
+#searchCategoryCheck {
+  max-height: 150px;
+  overflow: auto;
+}
+
+#searchCategoryCheck::-webkit-scrollbar {
+  margin-left: -5px;
+  width: 10px;
+  background-color: #ffffff;
+}
+
+#searchCategoryCheck::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: #b8b8b8;
+}
+
+#searchCategoryCheck::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.2);
+  border-radius: 10px;
+  background-color: #636363;
+}
+
+body {
+  min-width: 320px;
 }

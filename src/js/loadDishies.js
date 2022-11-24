@@ -1,7 +1,7 @@
 import { dishSetup } from "/src/js/dishSetup.js"
 
 export async function getDishes(page) {
-    var url = new URL(`${api_url}/dish/`)
+    var url = new URL(`${api_url}/dish`)
     var params = {page:page}
     url.search = new URLSearchParams(params).toString();
     let response = await fetch(url);
