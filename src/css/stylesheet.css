@@ -1,39 +1,26 @@
 body::-webkit-scrollbar {
   width: 10px;
-  background-color: #212529;
+  background-color: #ffffff00;
 }
 
 body::-webkit-scrollbar-thumb {
   border-radius: 10px;
-  background-color: #a1a1a1;
+  background-color: #dadce0;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background-color: #98999b;
 }
 
 body::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.2);
   border-radius: 10px;
-  background-color: #212529;
+  background-color: #ffffff00;
 }
 
 #searchCategoryCheck {
   max-height: 150px;
   overflow: auto;
-}
-
-#searchCategoryCheck::-webkit-scrollbar {
-  margin-left: -5px;
-  width: 10px;
-  background-color: #ffffff;
-}
-
-#searchCategoryCheck::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  background-color: #b8b8b8;
-}
-
-#searchCategoryCheck::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.2);
-  border-radius: 10px;
-  background-color: #636363;
 }
 
 body {

@@ -90,7 +90,7 @@ async function showPagination(args, pagination, pages) {
 	// кнопки стрелок начала и конца
 	pagesElement.find("#begin").attr("href", `/?${createSearchParameters(args, 1)}`);
 	pagesElement.find("#end").attr("href", `/?${createSearchParameters(args, pages)}`);
-
+	// кнопки стрелов вперед и назад
 	pagesElement.find("#back").attr("href", `/?${createSearchParameters(args, args.page - 1)}`);
 	pagesElement.find("#forward").attr("href", `/?${createSearchParameters(args, args.page + 1)}`);
 
@@ -111,15 +111,21 @@ async function showPagination(args, pagination, pages) {
 		page2.text("2").attr("href", `/?${createSearchParameters(args, 2)}`);
 		args.page == 1 ? page1.addClass("active") : page2.addClass("active");
 	} else {
-		let firstValue = args.page - 1;
 		let activePage = 2;
-		if (args.page <= 3) {
-			firstValue = 1;
-			activePage = args.page;
-		} else if (args.page == pages) {
-			firstValue = pages - 2;
-			activePage = 3;
+		let firstValue, lastValue;
+		firstValue = args.page - 1;
+		lastValue = args.page + 1;
+		while (lastValue > pages) {
+			activePage++;
+			firstValue--;
+			lastValue--;
 		}
+		while (firstValue < 1) {
+			activePage--;
+			firstValue++;
+			lastValue++;
+		}
+
 		page1.text(firstValue).attr("href", `/?${createSearchParameters(args, firstValue)}`);
 		page2.text(firstValue + 1).attr("href", `/?${createSearchParameters(args, firstValue + 1)}`);
 		page3.text(firstValue + 2).attr("href", `/?${createSearchParameters(args, firstValue + 2)}`);
