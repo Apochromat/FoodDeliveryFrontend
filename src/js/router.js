@@ -101,3 +101,18 @@ export function searchParse(search, searchpage = true) {
 
 	return output;
 }
+
+export function createSearchParameters(args) {
+	let output = new URLSearchParams();
+
+	if (args.page !== undefined) {output.set('page', args.page)}
+	if (args.categories !== undefined) {
+		for (let category of args.categories) {
+			output.append('categories', category);
+		}
+	}
+	if (args.sorting !== undefined) {output.set('sorting', args.sorting)}
+	if (args.vegetarian !== undefined) {output.set('vegetarian', args.vegetarian)}
+
+	return output.toString();
+}

@@ -1,10 +1,9 @@
 import { dishSetup } from "/src/js/dishSetup.js";
-import { searchParse } from "/src/js/router.js";
+import { searchParse, createSearchParameters} from "/src/js/router.js";
 
 export async function getDishes(args) {
 	var url = new URL(`${api_url}/dish`);
-	var params = args;
-	url.search = new URLSearchParams(params).toString();
+	url.search = createSearchParameters(args);
 	let response = await fetch(url);
 	if (response.ok) {
 		let json = await response.json();
@@ -15,6 +14,7 @@ export async function getDishes(args) {
 }
 
 export async function initMenu(args, router) {
+	await initSearch(args);
 	if (args.page < 0) return;
 	let dishesJSON = await getDishes(args);
 	let dishes = dishesJSON.dishes;
@@ -43,6 +43,20 @@ async function showDishes(dishes, page, dishTemplate, pages) {
 	});
 }
 
+async function initSearch(params) {
+	if (params.categories !== undefined) {
+		$("#searchCategoryCheck").val(params.categories);
+	}
+
+	if (params.sorting !== undefined) {
+		$("#searchSortingCheck").val(params.sorting);
+	}
+
+	if (params.vegetarian !== undefined) {
+		$("#searchVegeterianCheck").prop("checked", params.vegetarian === "true" ? true : false);
+	}
+}
+
 async function attachSearch(router) {
 	let search = {};
 	$("#searchSubmit").on("click", (event) => {
@@ -61,7 +75,7 @@ async function attachSearch(router) {
 
 		search.page = curr.page;
 
-		router.dispatch(window.location.pathname, `?${new URLSearchParams(search).toString()}`);
+		router.dispatch(window.location.pathname, `?${createSearchParameters(search)}`);
 	});
 }
 
