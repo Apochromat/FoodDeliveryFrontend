@@ -633,7 +633,7 @@
         tabindex: 0,
         keyboardEnabled: true,
         mouseEnabled: true,
-        containerClass: 'ratingItem border border-1 rounded-1',
+        containerClass: 'text-center border border-1 rounded-1',
         size: 'xs',
         animate: true,
         displayOnly: false,

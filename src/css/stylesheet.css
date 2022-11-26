@@ -29,10 +29,6 @@ body {
   min-height: 100vh;
 }
 
-.ratingItem {
-  text-align: center;
-}
-
 main {
   padding-bottom: 2.5rem;    /* Footer height */
 }

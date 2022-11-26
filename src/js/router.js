@@ -1,15 +1,18 @@
 import { initMenu } from "/src/js/loadDishies.js";
+import { initLoginPage } from "/src/js/loginPage.js";
+import { initRegisterPage } from "/src/js/registerPage.js";
 import { setNavbar } from "/src/js/initNavbar.js";
 
 let router = {
 	routes: [
-		/*{ pattern: /^\/login$/, callback: "login", nav: [] },
-        { pattern: /^\/register$/, callback: "register", nav: [] },
+		/*	
         { pattern: /^\/orders$/, callback: "orders", nav: ["ordersLink"] },
         { pattern: /^\/profile$/, callback: "profile", nav: ["profileLink"] },
         { pattern: /^\/item\/([a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12})$/,
           callback: "item", nav: ["itemLink"] },
         */
+		{ pattern: /^\/register$/, callback: "register", nav: [] },
+		{ pattern: /^\/login$/, callback: "login", nav: [] },
 		{ pattern: /^\/$/, callback: "menu", nav: ["dishesLink"] },
 	],
 
@@ -58,6 +61,25 @@ let routerFunctions = {
 		$("main").load("/src/views/dishesContainer.html", () => initMenu(parsed, router));
 		return true;
 	},
+
+	login: function() {
+        if (router.checkLogin()) {
+            router.dispatch("/", "");
+            return false;
+        }
+        
+        $("main").load("/src/views/login.html", () => initLoginPage());
+        return true;
+    },
+
+	register: function() {
+        if (router.checkLogin()) {
+            router.dispatch("/1");
+            return false;
+        }
+        $("main").load("/src/views/register.html", () => initRegisterPage());
+        return true;
+    },
 };
 
 $(document).one("DOMContentLoaded", async function () {

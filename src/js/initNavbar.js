@@ -8,7 +8,7 @@ export function setNavbar() {
         if (auth.auth) {
             $.get("/src/views/navbar.html", function (data) {
                 header.html(data);
-                header.find("#user").text(`Авторизован как ${auth.user.name}`);
+                header.find("#user").text(`${auth.user.email}`);
                 header.find("#logout").on("click", logoutUser);
                 resolve(true);
             });
