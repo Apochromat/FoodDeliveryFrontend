@@ -1,5 +1,5 @@
 import { dishSetup } from "/src/js/dishSetup.js";
-import { searchParse, createSearchParameters} from "/src/js/router.js";
+import { searchParse, createSearchParameters } from "/src/js/router.js";
 
 export async function getDishes(args) {
 	var url = new URL(`${api_url}/dish`);
@@ -27,11 +27,11 @@ export async function initMenu(args, router) {
 	}
 	await attachSearch(router);
 	$.get("/src/views/dishItem.html", function (data) {
-		showDishes(dishes, args.page, data, pages.count);
+		showDishes(dishes, args, data, pages.count);
 	});
 }
 
-async function showDishes(dishes, page, dishTemplate, pages) {
+async function showDishes(dishes, args, dishTemplate, pages) {
 	let dishesContainer = $("#dishes-container");
 	dishes.forEach((curr) => {
 		let newDish = dishSetup($(dishTemplate), curr);
@@ -39,17 +39,19 @@ async function showDishes(dishes, page, dishTemplate, pages) {
 	});
 	$(".dishItem").fadeOut(0).slideDown("normal");
 	$.get("/src/views/pagination.html", function (data) {
-		showPagination(page, data, pages);
+		showPagination(args, data, pages);
 	});
 }
 
 async function initSearch(params) {
+	$("#searchCategoryCheck").selectpicker();
+	$("#searchSortingCheck").selectpicker();
 	if (params.categories !== undefined) {
-		$("#searchCategoryCheck").val(params.categories);
+		$("#searchCategoryCheck").selectpicker("val", params.categories);
 	}
 
 	if (params.sorting !== undefined) {
-		$("#searchSortingCheck").val(params.sorting);
+		$("#searchSortingCheck").selectpicker("val", params.sorting);
 	}
 
 	if (params.vegetarian !== undefined) {
@@ -58,9 +60,8 @@ async function initSearch(params) {
 }
 
 async function attachSearch(router) {
-	let search = {};
 	$("#searchSubmit").on("click", (event) => {
-		let curr = searchParse(window.location.search);
+		let search = { page: 1 };
 
 		let categories = $("#searchCategoryCheck").val();
 		if (categories.length !== 0) {
@@ -73,45 +74,55 @@ async function attachSearch(router) {
 		let vegetarian = $("#searchVegeterianCheck").prop("checked");
 		search.vegetarian = vegetarian;
 
-		search.page = curr.page;
-
 		router.dispatch(window.location.pathname, `?${createSearchParameters(search)}`);
 	});
 }
 
-async function showPagination(page, pagination, pages) {
+async function showPagination(args, pagination, pages) {
 	let pagesElement = $(pagination);
-	if (page <= 1) pagesElement.find("#back").addClass("disabled");
-	if (page >= pages) pagesElement.find("#forward").addClass("disabled");
+	// минимальная страница
+	if (args.page <= 1) pagesElement.find("#back").addClass("disabled");
+	if (args.page <= 1) pagesElement.find("#begin").addClass("disabled");
+	// максимальная страница
+	if (args.page >= pages) pagesElement.find("#forward").addClass("disabled");
+	if (args.page >= pages) pagesElement.find("#end").addClass("disabled");
 
-	pagesElement.find("#back").attr("href", `/?page=1`);
-	pagesElement.find("#forward").attr("href", `/?page=${pages}`);
+	// кнопки стрелок начала и конца
+	pagesElement.find("#begin").attr("href", `/?${createSearchParameters(args, 1)}`);
+	pagesElement.find("#end").attr("href", `/?${createSearchParameters(args, pages)}`);
+
+	pagesElement.find("#back").attr("href", `/?${createSearchParameters(args, args.page - 1)}`);
+	pagesElement.find("#forward").attr("href", `/?${createSearchParameters(args, args.page + 1)}`);
 
 	let page1 = pagesElement.find("#page1");
 	let page2 = pagesElement.find("#page2");
 	let page3 = pagesElement.find("#page3");
+
 	if (pages == 1) {
 		page2.remove();
 		page3.remove();
-		page1.text("1").addClass("active").attr("href", "/?page=1");
+		page1
+			.text("1")
+			.addClass("active")
+			.attr("href", `/?${createSearchParameters(args, 1)}`);
 	} else if (pages == 2) {
 		page3.remove();
-		page1.text("1").attr("href", "/?page=1");
-		page2.text("2").attr("href", "/?page=2");
-		page == 1 ? page1.addClass("active") : page2.addClass("active");
+		page1.text("1").attr("href", `/?${createSearchParameters(args, 1)}`);
+		page2.text("2").attr("href", `/?${createSearchParameters(args, 2)}`);
+		args.page == 1 ? page1.addClass("active") : page2.addClass("active");
 	} else {
-		let firstValue = page - 1;
+		let firstValue = args.page - 1;
 		let activePage = 2;
-		if (page <= 3) {
+		if (args.page <= 3) {
 			firstValue = 1;
-			activePage = page;
-		} else if (page == pages) {
+			activePage = args.page;
+		} else if (args.page == pages) {
 			firstValue = pages - 2;
 			activePage = 3;
 		}
-		page1.text(firstValue).attr("href", `/?page=${firstValue}`);
-		page2.text(firstValue + 1).attr("href", `/?page=${firstValue + 1}`);
-		page3.text(firstValue + 2).attr("href", `/?page=${firstValue + 2}`);
+		page1.text(firstValue).attr("href", `/?${createSearchParameters(args, firstValue)}`);
+		page2.text(firstValue + 1).attr("href", `/?${createSearchParameters(args, firstValue + 1)}`);
+		page3.text(firstValue + 2).attr("href", `/?${createSearchParameters(args, firstValue + 2)}`);
 		pagesElement.find(`#page${activePage}`).addClass("active");
 	}
 	$("#dishes-container").after(pagesElement);

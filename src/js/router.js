@@ -102,10 +102,11 @@ export function searchParse(search, searchpage = true) {
 	return output;
 }
 
-export function createSearchParameters(args) {
+export function createSearchParameters(args, page = null) {
 	let output = new URLSearchParams();
 
 	if (args.page !== undefined) {output.set('page', args.page)}
+	if (page !== null) {{output.set('page', page)}}
 	if (args.categories !== undefined) {
 		for (let category of args.categories) {
 			output.append('categories', category);
