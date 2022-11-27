@@ -4,19 +4,42 @@ import { searchParse, createSearchParameters } from "/src/js/router.js";
 export async function getDishes(args) {
 	var url = new URL(`${api_url}/dish`);
 	url.search = createSearchParameters(args);
-	let response = await fetch(url);
-	if (response.ok) {
-		let json = await response.json();
-		return json;
-	} else {
-		return new Object();
-	}
+	let t;
+	await fetch(url)
+		.then((res) => {
+			if (res.status === 400) {
+				throw new Error("your error message here");
+			}
+			return res.json();
+		})
+		.then((json) => {
+			t = json;
+		})
+		.catch((ex) => {
+			t = null;
+		});
+	return t;
+	// let response = await fetch(url);
+	// if (response.ok) {
+	// 	let json = await response.json();
+	// 	return json;
+	// } else {
+	// 	return null;
+	// }
 }
 
 export async function initMenu(args, router) {
 	await initSearch(args);
+	await attachSearch(router);
 	if (args.page < 0) return;
 	let dishesJSON = await getDishes(args);
+	if (dishesJSON === null) {
+		$.get("/src/views/emptyDishies.html", function (data) {
+			let dishesContainer = $("#dishes-container");
+			dishesContainer.append(data);
+		});
+		return;
+	}
 	let dishes = dishesJSON.dishes;
 	let pages = dishesJSON.pagination;
 	if (pages.count < 1) return;
@@ -25,7 +48,6 @@ export async function initMenu(args, router) {
 		initMenu(pages.count);
 		return;
 	}
-	await attachSearch(router);
 	$.get("/src/views/dishItem.html", function (data) {
 		showDishes(dishes, args, data, pages.count);
 	});
@@ -60,22 +82,26 @@ async function initSearch(params) {
 }
 
 async function attachSearch(router) {
-	$("#searchSubmit").on("click", (event) => {
-		let search = { page: 1 };
-
-		let categories = $("#searchCategoryCheck").val();
-		if (categories.length !== 0) {
-			search.categories = categories;
-		}
-
-		let sorting = $("#searchSortingCheck").val();
-		search.sorting = sorting;
-
-		let vegetarian = $("#searchVegeterianCheck").prop("checked");
-		search.vegetarian = vegetarian;
-
-		router.dispatch(window.location.pathname, `?${createSearchParameters(search)}`);
+	$(".searchSubmit").click(function() {
+		runSearch(router);
 	});
+}
+
+async function runSearch(router) {
+	let search = { page: 1 };
+
+	let categories = $("#searchCategoryCheck").val();
+	if (categories.length !== 0) {
+		search.categories = categories;
+	}
+
+	let sorting = $("#searchSortingCheck").val();
+	search.sorting = sorting;
+
+	let vegetarian = $("#searchVegeterianCheck").prop("checked");
+	search.vegetarian = vegetarian;
+
+	router.dispatch(window.location.pathname, `?${createSearchParameters(search)}`);
 }
 
 async function showPagination(args, pagination, pages) {

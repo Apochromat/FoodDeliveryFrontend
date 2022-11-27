@@ -1,11 +1,11 @@
 <div
-  class="row row-cols-xxl-4 row-cols-lg-3 row-cols-md-2 row-cols-1 mt-1 mx-5 mb-4 gap-0 container mx-auto bg-white shadow rounded pb-2"
+  class="row row-cols-xxl-4 row-cols-lg-3 row-cols-md-2 row-cols-1 mx-5 mb-4 gap-0 container mx-auto bg-white shadow rounded pb-2"
   id="dishes-container">
   <div
     class="row row-cols-xl-4 row-cols-md-2 row-cols-1 w-100 p-2 border border-3 border-light mx-auto bg-white rounded"
     id="search">
     <div class="col p-1">
-      <select class="selectpicker w-100" multiple id="searchCategoryCheck" aria-label="Default select example">
+      <select class="selectpicker w-100" multiple id="searchCategoryCheck">
         <option value="Wok">WOK</option>
         <option value="Pizza">Pizza</option>
         <option value="Soup">Soup</option>
@@ -14,13 +14,13 @@
       </select>
     </div>
     <div class="col my-auto p-1">
-      <select class="selectpicker w-100" id="searchSortingCheck" aria-label="Default select example">
-        <option value="NameAsc">А-Я</option>
-        <option value="NameDesc">Я-А</option>
-        <option value="PriceAsc">Цена 🔺</option>
-        <option value="PriceDesc">Цена 🔻</option>
-        <option value="RatingAsc">Рейтинг 🔺</option>
-        <option value="RatingDesc">Рейтинг 🔻</option>
+      <select class="selectpicker w-100" id="searchSortingCheck">
+        <option value="NameAsc">По возрастанию алфавита</option>
+        <option value="NameDesc">По убыванию алфавита</option>
+        <option value="PriceAsc">Сначала недорогие</option>
+        <option value="PriceDesc">Сначала дорогие</option>
+        <option value="RatingAsc">Сначала с низкой оценкой</option>
+        <option value="RatingDesc">Сначала с высокой оценкой</option>
       </select>
     </div>
     <div class="col my-auto p-1">
@@ -30,7 +30,7 @@
       </div>
     </div>
     <div class="col my-auto p-1">
-      <button type="submit" class="btn btn-primary end-0 float-end" id="searchSubmit">Применить</button>
+      <button type="submit" class="btn btn-primary end-0 float-end searchSubmit" id="searchSubmit">Применить</button>
     </div>
   </div>
 </div>

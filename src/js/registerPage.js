@@ -23,27 +23,7 @@ export function initRegisterPage() {
 		let phone = $("#phone").val();
 		let sex = $("#gender").val();
 		let address = $("#address").val();
-		/*
-        try {
-            $("#signUpBtn").addClass("disabled");
-            $("input, select").prop("disabled", true);
-            
-            let regAttempt = await registerUser(email, pass, name, address, birth, sex);
-            if (regAttempt.ok) location.href = "/";
-            else {
-                $("#regWarn").remove();
-                $("#signUpBtn").before(`<p class="text-danger" id="regWarn">${regAttempt.msg.errors}</p>`);
-            }
-        }
-        catch {
-            alert("Ошибка соединения");
-        }
-        finally {
-            $("#signUpBtn").removeClass("disabled");
-            $("input, select").prop("disabled", false);
-        }
-    });
-        */
+
 		let checks = [checkPassword(), checkName(), checkEmail(), checkBirthday(), checkPhone()];
 		try {
 			for (let i = 0; i < checks.length; ++i) {
