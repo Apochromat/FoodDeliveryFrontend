@@ -10,21 +10,21 @@ $.appear = function (selector, time = 1000) {
 	$(selector).removeClass("d-none").fadeOut(0).show(time);
 };
 
-// window.fetch = new Proxy(window.fetch, {
-// 	apply(fetch, context, args) {
-// 		let response;
-// 		try {
-// 			response = fetch.apply(context, args);
-// 			response.then((data) => {
-// 				if (data.status == 401) {
-// 					localStorage.removeItem("jwt");
-// 					localStorage.removeItem("user");
-// 					if (window.location.pathname != "/login") location.href = "/login";
-// 				}
-// 			});
-// 			return response;
-// 		} catch (err) {
-// 			throw err;
-// 		}
-// 	},
-// });
+window.fetch = new Proxy(window.fetch, {
+	apply(fetch, context, args) {
+		let response;
+		try {
+			response = fetch.apply(context, args);
+			response.then((data) => {
+				if (data.status == 401) {
+					localStorage.removeItem("jwt");
+					localStorage.removeItem("user");
+					if (window.location.pathname != "/login") location.href = "/login";
+				}
+			});
+			return response;
+		} catch (err) {
+			throw err;
+		}
+	},
+});
