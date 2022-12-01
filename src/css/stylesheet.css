@@ -42,7 +42,7 @@ footer {
   background-color: #151517;
 }
 
-#dishes-container, #profile-container, #notfound-container, #register-container{
+.container{
   color: #ffffff;
 }
 
@@ -83,4 +83,8 @@ img {
 
 .theme-krajee-svg .empty-stars .krajee-icon-star {
   background-image: url(/src/img/empty-star-dark.svg);
+}
+
+* {
+  outline: none !important;
 }

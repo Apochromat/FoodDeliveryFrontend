@@ -19,13 +19,6 @@ export async function getDishes(args) {
 			t = null;
 		});
 	return t;
-	// let response = await fetch(url);
-	// if (response.ok) {
-	// 	let json = await response.json();
-	// 	return json;
-	// } else {
-	// 	return null;
-	// }
 }
 
 export async function initMenu(args, router) {
@@ -34,7 +27,7 @@ export async function initMenu(args, router) {
 	if (args.page < 0) return;
 	let dishesJSON = await getDishes(args);
 	if (dishesJSON === null) {
-		$.get("/src/views/emptyDishies.html", function (data) {
+		$.get("/src/views/notFoundDishies.html", function (data) {
 			let dishesContainer = $("#dishes-container");
 			dishesContainer.append(data);
 		});
@@ -48,7 +41,7 @@ export async function initMenu(args, router) {
 		initMenu(pages.count);
 		return;
 	}
-	$.get("/src/views/dishItem.html", function (data) {
+	$.get("/src/views/dishCard.html", function (data) {
 		showDishes(dishes, args, data, pages.count);
 	});
 }

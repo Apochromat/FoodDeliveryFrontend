@@ -3,7 +3,7 @@ export function dishSetup(newDish, currentDish) {
     newDish.find(".card-title a").attr("href", `/item/${currentDish.id}`);
     newDish.find(".imageDiv").attr("src", currentDish.image);
     newDish.find(".category").text(`Категория блюда - ${currentDish.category}`);
-    newDish.find(".rating").rating({displayOnly: false, step: 1});
+    newDish.find(".rating").rating({displayOnly: true, step: 1});
     newDish.find(".rating").rating('update', currentDish.rating);
     newDish.find(".desc").text(currentDish.description);
     newDish.find(".cost").text(`Цена - ${currentDish.price}`);
@@ -38,9 +38,9 @@ export function dishSetup(newDish, currentDish) {
         }
     })
 
-    // newDish.on("click", event => {
-    //     if ($(event.target).prop("tagName") != "BUTTON") newDish.find("a")[0].click();
-    // });
+    newDish.on("click", event => {
+        if ($(event.target).prop("tagName") != "BUTTON") newDish.find("a")[0].click();
+    });
 
     return newDish;
 }

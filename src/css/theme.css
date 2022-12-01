@@ -45,8 +45,8 @@
  
  .theme-krajee-svg.rating-md .krajee-icon,
  .theme-krajee-svg.rating-md .krajee-icon-clear {
-     width: 2rem;
-     height: 2rem;
+    width: 1.4rem;
+    height: 1.4rem;
  }
  
  .theme-krajee-svg.rating-sm .krajee-icon,
@@ -57,8 +57,8 @@
  
  .theme-krajee-svg.rating-xs .krajee-icon,
  .theme-krajee-svg.rating-xs .krajee-icon-clear {
-     width: 0.75rem;
-     height: 0.75rem;
+     width: 0.9rem;
+     height: 0.9rem;
  }
  
  .theme-krajee-svg.rating-rtl.is-heart .filled-stars {

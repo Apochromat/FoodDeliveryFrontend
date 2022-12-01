@@ -2,6 +2,7 @@ import { initMenu } from "/src/js/loadDishies.js";
 import { initLoginPage } from "/src/js/loginPage.js";
 import { initRegisterPage } from "/src/js/registerPage.js";
 import { initProfilePage } from "/src/js/profilePage.js";
+import { initDishPage } from "/src/js/dishPage.js";
 import { setNavbar } from "/src/js/initNavbar.js";
 
 let router = {
@@ -16,7 +17,7 @@ let router = {
         { pattern: /^\/profile$/, callback: "profile", nav: ["profileLink"] },
 		{ pattern: /^\/register$/, callback: "register", nav: [] },
 		{ pattern: /^\/login$/, callback: "login", nav: [] },
-		/*{ pattern: /^\/item\/([a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12})$/, callback: "dish", nav: [] },*/
+		{ pattern: /^\/item\/([a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12})$/, callback: "dish", nav: [] },
 		{ pattern: /^\/$/, callback: "menu", nav: ["dishesLink"] },
 	],
 
@@ -24,10 +25,11 @@ let router = {
 		for (let i = 0; i < this.routes.length; ++i) {
 			let args = path.match(this.routes[i].pattern);
 			if (args) {
+				$("main").empty();
 				if (!routerFunctions[this.routes[i].callback].apply(this, [args.slice(1), search])) {
 					return;
 				}
-				$("main").empty();
+				
 				if (pushHistory) history.pushState({}, null, `${path}${search}`);
 				$(".me-auto a").removeClass("active");
 				this.routes[i].nav.forEach((val) => $(`#${val}`).addClass("active"));
@@ -63,7 +65,7 @@ let routerFunctions = {
 	},
 
 	notfound: function () {
-		$("main").load("/src/views/404.html");
+		$("main").load("/src/views/notFound.html");
 	},
 
 	menu: function (args, search) {
@@ -99,6 +101,11 @@ let routerFunctions = {
         $("main").load("/src/views/profile.html", () => initProfilePage());
         return true;
     },
+
+	dish: function (args, search) {
+		$("main").load("/src/views/dishItem.html", (page) => initDishPage($(page), args, router));
+		return true;
+	}
 };
 
 $(document).one("DOMContentLoaded", async function () {
