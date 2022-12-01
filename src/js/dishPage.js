@@ -1,23 +1,4 @@
-import {checkRating, setRating} from "/src/js/orders.js"
-
-export async function getDish(id) {
-	var url = new URL(`${api_url}/dish/${id}`);
-	let t;
-	await fetch(url)
-		.then((res) => {
-			if (res.status === 400) {
-				throw new Error("your error message here");
-			}
-			return res.json();
-		})
-		.then((json) => {
-			t = json;
-		})
-		.catch((ex) => {
-			t = null;
-		});
-	return t;
-}
+import {checkRating, setRating, getDish} from "/src/js/dishAPI.js"
 
 export async function initDishPage(page, args, router) {
     let dishJSON = await getDish(args[0]);
@@ -36,7 +17,7 @@ export async function initDishPage(page, args, router) {
     }
 }
 
-export async function setupDish(page, args, ratingFixed = true) {
+async function setupDish(page, args, ratingFixed = true) {
 
     $("#name").text(args.name);
     $("#image").attr("src", args.image);

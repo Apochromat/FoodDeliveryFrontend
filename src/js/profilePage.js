@@ -1,4 +1,4 @@
-import { getProfileDetails, changeProfile } from "/src/js/profile.js";
+import { getProfileDetails, changeProfile } from "/src/js/profileAPI.js";
 export async function initProfilePage() {
     IMask(document.getElementById("inputPhone"), {
 		mask: "+{7} (000) 000-00-00"

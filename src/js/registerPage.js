@@ -1,4 +1,4 @@
-import { registerUser } from "/src/js/auth.js";
+import { registerUser } from "/src/js/authAPI.js";
 
 export function initRegisterPage() {
 	IMask(document.getElementById("phone"), {

@@ -1,4 +1,4 @@
-import { loginUser } from "/src/js/auth.js";
+import { loginUser } from "/src/js/authAPI.js";
 export function initLoginPage() {
     $("#loginBtn").on("click", async () => {
         $("#login").prop("disabled", true);

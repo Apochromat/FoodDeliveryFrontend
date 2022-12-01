@@ -1,25 +1,6 @@
-import { dishSetup } from "/src/js/dishSetup.js";
+import { addBasket, deleteBasket, getBasket, countBasket } from "/src/js/basketAPI.js";
+import { getDishes } from "/src/js/dishAPI.js";
 import { searchParse, createSearchParameters } from "/src/js/router.js";
-
-export async function getDishes(args) {
-	var url = new URL(`${api_url}/dish`);
-	url.search = createSearchParameters(args);
-	let t;
-	await fetch(url)
-		.then((res) => {
-			if (res.status === 400) {
-				throw new Error("your error message here");
-			}
-			return res.json();
-		})
-		.then((json) => {
-			t = json;
-		})
-		.catch((ex) => {
-			t = null;
-		});
-	return t;
-}
 
 export async function initMenu(args, router) {
 	await initSearch(args);
@@ -48,10 +29,12 @@ export async function initMenu(args, router) {
 
 async function showDishes(dishes, args, dishTemplate, pages) {
 	let dishesContainer = $("#dishes-container");
-	dishes.forEach((curr) => {
-		let newDish = dishSetup($(dishTemplate), curr);
+	let basket = await getBasket();
+	dishes.forEach(async (curr) => {
+		let newDish = await dishSetup($(dishTemplate), curr, basket);
 		dishesContainer.append(newDish);
 	});
+	$("#basketBadge").text(`${await countBasket()}`);
 	$.get("/src/views/pagination.html", function (data) {
 		showPagination(args, data, pages);
 	});
@@ -74,7 +57,7 @@ async function initSearch(params) {
 }
 
 async function attachSearch(router) {
-	$(".searchSubmit").click(function() {
+	$(".searchSubmit").click(function () {
 		runSearch(router);
 	});
 }
@@ -151,5 +134,84 @@ async function showPagination(args, pagination, pages) {
 	}
 	$("#dishes-container").after(pagesElement);
 
-    //$.appear("#dishes-container", 500);
+	//$.appear("#dishes-container", 500);
+}
+
+export async function dishSetup(newDish, currentDish, basket) {
+	newDish.find(".card-title a").text(currentDish.name);
+	newDish.find(".card-title a").attr("href", `/item/${currentDish.id}`);
+	newDish.find(".imageDiv").attr("src", currentDish.image);
+	newDish.find(".category").text(`Категория блюда - ${currentDish.category}`);
+	newDish.find(".rating").rating({ displayOnly: true, step: 1 });
+	newDish.find(".rating").rating("update", currentDish.rating);
+	newDish.find(".desc").text(currentDish.description);
+	newDish.find(".cost").text(`Цена - ${currentDish.price}`);
+
+	if (currentDish.vegetarian) {
+		newDish.find(".vegetarianIcon").toggleClass("d-none", false);
+	}
+
+	let basketElement = null;
+	if (basket !== null) {
+		for (let el of basket) {
+			if (el.id === currentDish.id) {
+				basketElement = el;
+			}
+		}
+	}
+	else {
+		newDish.find(".orderButton").prop('disabled', true);;
+	}
+	
+	if (basketElement !== null) {
+		newDish.find(".orderDecreaser").toggleClass("d-none", false);
+		newDish.find(".orderButton").toggleClass("d-none", true);
+		let label = newDish.find(".orderLabel");
+		label.text(`${basketElement.amount}`);
+	}
+
+	newDish.find(".orderButton").on("click", async (event) => {
+		let token = localStorage.getItem("jwt");
+		if (!token) return;
+		await addBasket(currentDish.id);
+		newDish.find(".orderDecreaser").toggleClass("d-none", false);
+		newDish.find(".orderButton").toggleClass("d-none", true);
+		$("#basketBadge").text(`${await countBasket()}`);
+	});
+
+	newDish.find(".increase").on("click", async (event) => {
+		let token = localStorage.getItem("jwt");
+		if (!token) return;
+		let label = newDish.find(".orderLabel");
+		let value = parseInt(label.text(), 10);
+		value = isNaN(value) ? 0 : value;
+		value++;
+		label.text(`${value}`);
+		await addBasket(currentDish.id);
+		$("#basketBadge").text(`${await countBasket()}`);
+	});
+
+	newDish.find(".decrease").on("click", async (event) => {
+		let token = localStorage.getItem("jwt");
+		if (!token) return;
+		let label = newDish.find(".orderLabel");
+		let value = parseInt(label.text(), 10);
+		if (value <= 1) {
+			await deleteBasket(currentDish.id);
+			$("#basketBadge").text(`${await countBasket()}`);
+			newDish.find(".orderDecreaser").toggleClass("d-none", true);
+			newDish.find(".orderButton").toggleClass("d-none", false);
+		} else {
+			await deleteBasket(currentDish.id, true);
+			$("#basketBadge").text(`${await countBasket()}`);
+			value--;
+			label.text(`${value}`);
+		}
+	});
+
+	newDish.on("click", (event) => {
+		if ($(event.target).prop("tagName") != "BUTTON") newDish.find("a")[0].click();
+	});
+
+	return newDish;
 }
