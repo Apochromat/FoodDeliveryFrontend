@@ -1,6 +1,7 @@
 import { initMenu } from "/src/js/loadDishies.js";
 import { initLoginPage } from "/src/js/loginPage.js";
 import { initRegisterPage } from "/src/js/registerPage.js";
+import { initProfilePage } from "/src/js/profilePage.js";
 import { setNavbar } from "/src/js/initNavbar.js";
 
 let router = {
@@ -11,8 +12,11 @@ let router = {
         { pattern: /^\/item\/([a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12})$/,
           callback: "item", nav: ["itemLink"] },
         */
+		{ pattern: /^\/404$/, callback: "notfound", nav: [] },
+        { pattern: /^\/profile$/, callback: "profile", nav: ["profileLink"] },
 		{ pattern: /^\/register$/, callback: "register", nav: [] },
 		{ pattern: /^\/login$/, callback: "login", nav: [] },
+		/*{ pattern: /^\/item\/([a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12})$/, callback: "dish", nav: [] },*/
 		{ pattern: /^\/$/, callback: "menu", nav: ["dishesLink"] },
 	],
 
@@ -53,6 +57,12 @@ let router = {
 
 let routerFunctions = {
 	default: function () {
+		window.location.pathname = "/404";
+		router.dispatch(window.location.pathname, "");
+
+	},
+
+	notfound: function () {
 		$("main").load("/src/views/404.html");
 	},
 
@@ -74,10 +84,19 @@ let routerFunctions = {
 
 	register: function() {
         if (router.checkLogin()) {
-            router.dispatch("/1");
+            router.dispatch("/", "");
             return false;
         }
         $("main").load("/src/views/register.html", () => initRegisterPage());
+        return true;
+    },
+
+	profile: function() {
+        if (!router.checkLogin()) {
+            router.dispatch("/login", "");
+            return false;
+        }
+        $("main").load("/src/views/profile.html", () => initProfilePage());
         return true;
     },
 };

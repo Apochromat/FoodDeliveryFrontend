@@ -8,10 +8,10 @@ export function initRegisterPage() {
 		mask: /^[a-zA-Z0-9\-_!@#№$%^&?*+=(){}[\]<>~]+$/
 	});
     IMask(document.getElementById("name"), {
-		mask: /^[а-яА-ЯёЁa-zA-Z ]+$/
+		mask: /^[а-яА-ЯёЁa-zA-Z\- ]+$/
 	});
     IMask(document.getElementById("address"), {
-		mask: /^[а-яА-ЯёЁ0-9.,\- ]+$/
+		mask: /^[а-яА-ЯёЁa-zA-Z0-9.,\- ]+$/
 	});
 
 
@@ -135,4 +135,6 @@ export function initRegisterPage() {
 	$("#birthday").on("change", checkBirthday);
 
 	$("#birthday").attr("max", new Date().toISOString().split("T")[0]);
+
+	$.appear("#register-container", 700);
 }

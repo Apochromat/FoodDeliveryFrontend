@@ -59,7 +59,6 @@ async function showDishes(dishes, args, dishTemplate, pages) {
 		let newDish = dishSetup($(dishTemplate), curr);
 		dishesContainer.append(newDish);
 	});
-	$(".dishItem").fadeOut(0).slideDown("normal");
 	$.get("/src/views/pagination.html", function (data) {
 		showPagination(args, data, pages);
 	});
@@ -158,4 +157,6 @@ async function showPagination(args, pagination, pages) {
 		pagesElement.find(`#page${activePage}`).addClass("active");
 	}
 	$("#dishes-container").after(pagesElement);
+
+    //$.appear("#dishes-container", 500);
 }

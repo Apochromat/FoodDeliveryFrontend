@@ -1,0 +1,44 @@
+<div class="row container mx-auto shadow rounded pb-2" id="profile-container">
+  <h1 class="my-3 col-12">Профиль</h1>
+  <div class="col-12">
+    <div class="mb-3 row">
+      <label for="inputName" class="col-sm-2 col-form-label">ФИО</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="inputName" disabled>
+      </div>
+    </div>
+    <div class="mb-3 row">
+      <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
+      <div class="col-sm-10">
+        <input type="text" readonly class="form-control" id="staticEmail">
+      </div>
+    </div>
+    <div class="mb-3 row">
+      <label for="inputBirth" class="col-sm-2 col-form-label">Дата рождения</label>
+      <div class="col-sm-10">
+        <input type="date" class="form-control" id="inputBirth" min="1900-01-01" disabled>
+      </div>
+    </div>
+    <div class="mb-3 row">
+      <label for="staticGender" class="col-sm-2 col-form-label">Пол</label>
+      <div class="col-sm-10">
+        <input type="text" readonly class="form-control" id="staticGender">
+      </div>
+    </div>
+    <div class="mb-3 row">
+      <label for="inputAddress" class="col-sm-2 col-form-label">Адрес</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="inputAddress" disabled>
+      </div>
+    </div>
+    <div class="mb-3 row">
+      <label for="inputPhone" class="col-sm-2 col-form-label">Телефон</label>
+      <div class="col-sm-10">
+        <input type="phone" class="form-control" id="inputPhone" disabled>
+      </div>
+    </div>
+  </div>
+  <div class="mb-3 col-md-3 col-12">
+    <button type="button" class="btn btn-primary col-12 float-end" id="editProfileBtn">Редактировать</button>
+  </div>
+</div>

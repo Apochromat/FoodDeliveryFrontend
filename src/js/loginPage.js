@@ -22,4 +22,6 @@ export function initLoginPage() {
         }
 
     });
+
+    $.appear("#login-container", 700);
 }

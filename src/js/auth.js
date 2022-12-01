@@ -78,7 +78,7 @@ export async function registerUser(email, pass, name, address, phone, birth, sex
         email: email,
         birthDate: `${birth}T00:00:00.000Z`,
 		gender: sex == "Мужской" ? "Male" : "Female",
-        phone: phone,
+        phoneNumber: phone,
         address: address
     }
     // if (phone !== "") { model.phone = phone; }
