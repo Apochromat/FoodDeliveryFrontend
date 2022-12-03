@@ -4,6 +4,8 @@ import { initRegisterPage } from "/src/js/registerPage.js";
 import { initProfilePage } from "/src/js/profilePage.js";
 import { initDishPage } from "/src/js/dishPage.js";
 import { initBasketPage } from "/src/js/basketPage.js";
+import { initOrdersPage } from "/src/js/ordersPage.js";
+import { initOrderPage } from "/src/js/orderPage.js";
 import { setNavbar } from "/src/js/navbar.js";
 import { countBasket } from "/src/js/basketAPI.js";
 
@@ -15,7 +17,9 @@ let router = {
 		{ pattern: /^\/register$/, callback: "register", nav: [] },
 		{ pattern: /^\/login$/, callback: "login", nav: [] },
 		{ pattern: /^\/cart$/, callback: "cart", nav: [] },
+		{ pattern: /^\/orders$/, callback: "orders", nav: [] },
 		{ pattern: /^\/item\/([a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12})$/, callback: "dish", nav: [] },
+		{ pattern: /^\/order\/([a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12})$/, callback: "order", nav: [] },
 		{ pattern: /^\/$/, callback: "menu", nav: ["dishesLink"] },
 	],
 
@@ -105,7 +109,29 @@ let routerFunctions = {
 	},
 
 	cart: function () {
+		if (!router.checkLogin()) {
+			router.dispatch("/", "");
+			return false;
+		}
 		$("main").load("/src/views/basketContainer.html", () => initBasketPage());
+		return true;
+	},
+
+	orders: function () {
+		if (!router.checkLogin()) {
+			router.dispatch("/", "");
+			return false;
+		}
+		$("main").load("/src/views/ordersContainer.html", () => initOrdersPage());
+		return true;
+	},
+
+	order: function (args, search) {
+		if (!router.checkLogin()) {
+			router.dispatch("/", "");
+			return false;
+		}
+		$("main").load("/src/views/orderContainer.html", () => initOrderPage(args, router));
 		return true;
 	},
 };

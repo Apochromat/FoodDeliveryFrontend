@@ -9,8 +9,8 @@ export async function initDishPage(args, router) {
 
     let token = localStorage.getItem("jwt");
     if (token) {
-        let ratingJSON = await checkRating(args[0]);
-        await setupDish(dishJSON, ratingJSON);
+        let rating = await checkRating(args[0]);
+        await setupDish(dishJSON, !rating);
     }
     else {
         await setupDish(dishJSON);
