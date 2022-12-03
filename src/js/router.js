@@ -3,6 +3,7 @@ import { initLoginPage } from "/src/js/loginPage.js";
 import { initRegisterPage } from "/src/js/registerPage.js";
 import { initProfilePage } from "/src/js/profilePage.js";
 import { initDishPage } from "/src/js/dishPage.js";
+import { initBasketPage } from "/src/js/basketPage.js";
 import { setNavbar } from "/src/js/navbar.js";
 import { countBasket } from "/src/js/basketAPI.js";
 
@@ -13,6 +14,7 @@ let router = {
 		{ pattern: /^\/profile$/, callback: "profile", nav: ["profileLink"] },
 		{ pattern: /^\/register$/, callback: "register", nav: [] },
 		{ pattern: /^\/login$/, callback: "login", nav: [] },
+		{ pattern: /^\/cart$/, callback: "cart", nav: [] },
 		{ pattern: /^\/item\/([a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12})$/, callback: "dish", nav: [] },
 		{ pattern: /^\/$/, callback: "menu", nav: ["dishesLink"] },
 	],
@@ -98,7 +100,12 @@ let routerFunctions = {
 	},
 
 	dish: function (args, search) {
-		$("main").load("/src/views/dishItem.html", (page) => initDishPage($(page), args, router));
+		$("main").load("/src/views/dishItem.html", () => initDishPage(args, router));
+		return true;
+	},
+
+	cart: function () {
+		$("main").load("/src/views/basketContainer.html", () => initBasketPage());
 		return true;
 	},
 };

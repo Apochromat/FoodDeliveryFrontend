@@ -1,6 +1,6 @@
 import {checkRating, setRating, getDish} from "/src/js/dishAPI.js"
 
-export async function initDishPage(page, args, router) {
+export async function initDishPage(args, router) {
     let dishJSON = await getDish(args[0]);
 	if (dishJSON === null) {
 		router.dispatch("/404", "");
@@ -10,14 +10,14 @@ export async function initDishPage(page, args, router) {
     let token = localStorage.getItem("jwt");
     if (token) {
         let ratingJSON = await checkRating(args[0]);
-        await setupDish(page, dishJSON, ratingJSON);
+        await setupDish(dishJSON, ratingJSON);
     }
     else {
-        await setupDish(page, dishJSON);
+        await setupDish(dishJSON);
     }
 }
 
-async function setupDish(page, args, ratingFixed = true) {
+async function setupDish(args, ratingFixed = true) {
 
     $("#name").text(args.name);
     $("#image").attr("src", args.image);
@@ -37,5 +37,5 @@ async function setupDish(page, args, ratingFixed = true) {
         await setRating(args.id, value);
     });
 
-    return page;
+    return;
 }

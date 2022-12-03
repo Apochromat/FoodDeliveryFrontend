@@ -1,90 +1,84 @@
 body::-webkit-scrollbar {
-  width: 5px;
-  background-color: #ffffff00;
+	width: 5px;
+	background-color: #ffffff00;
 }
 
 body::-webkit-scrollbar-thumb {
-  background-color: #4b4b4b;
+	background-color: #4b4b4b;
 }
 
 body::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0);
-  background-color: #ffffff00;
+	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0);
+	background-color: #ffffff00;
 }
 
 #searchCategoryCheck {
-  max-height: 150px;
-  overflow: auto;
+	max-height: 150px;
+	overflow: auto;
 }
 
 body {
-  min-width: 320px;
-  position: relative;
-  min-height: 100vh;
+	min-width: 320px;
+	position: relative;
+	min-height: 100vh;
+	background-color: #151517;
 }
 
 main {
-  padding-bottom: 2.5rem;    /* Footer height */
+	padding-bottom: 2.5rem; /* Footer height */
 }
 
 footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 2.5rem;            /* Footer height */
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 2.5rem; /* Footer height */
+	background-color: #151517;
 }
 
-body {
-  background-color: #151517;
-}
-
-footer {
-  background-color: #151517;
-}
-
-.container{
-  color: #ffffff;
+.container {
+	color: #ffffff;
 }
 
 .card {
-  background-color: #212529;
+	background-color: #212529;
 }
 
 .card-header {
-  background-color: #1d2023;
+	background-color: #1d2023;
 }
 
 .card-footer {
-  background-color: #1d2023;
+	background-color: #1d2023;
 }
 
-#pagination>li>a {
-  background-color: #212529;
-  border-color: #212529;
+#pagination > li > a {
+	background-color: #212529;
+	border-color: #212529;
 }
 
-#pagination>li>:focus,
-#pagination>li>:hover {
-  background-color: #16181b;
+#pagination > li > :focus,
+#pagination > li > :hover {
+	background-color: #16181b;
 }
 
-#pagination>.active>a {
-  background-color: #212529;
-  border: solid 1px #212529;
+#pagination > .active > a {
+	background-color: #212529;
+	border: solid 1px #212529;
 }
 
-#pagination>.active>a:hover {
-  border: solid 1px #4c535b !Important;
+#pagination > .active > a:hover {
+	border: solid 1px #4c535b !important;
 }
 
 img {
-  filter: brightness(80%);
+	filter: brightness(100%);
 }
 
 .theme-krajee-svg .empty-stars .krajee-icon-star {
-  background-image: url(/src/img/empty-star-dark.svg);
+	background-image: url(/src/img/empty-star-dark.svg);
 }
 
 * {
-  outline: none !important;
+	outline: none !important;
 }
