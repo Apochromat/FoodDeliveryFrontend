@@ -1,5 +1,7 @@
 import { getProfileDetails, changeProfile } from "/src/js/profileAPI.js";
 export async function initProfilePage() {
+    $.appear("#profile-container", 700);
+
     IMask(document.getElementById("inputPhone"), {
 		mask: "+{7} (000) 000-00-00"
 	});
@@ -55,21 +57,11 @@ export async function initProfilePage() {
     $("#inputBirth").val(details.birthDate.slice(0, 10));
 
     let saveProfile = async () => {
-        let email = $("#email").val();
-        let avatarLink = $("#avatarLink").val();
-        let name = $("#fullName").val();
-        let birth = $("#birthday").val();
-        let sex = $("#gender").val();
-        let blinking;
         try {
             if (!checkName() || !checkBirthday()) return;
 
             $("#editProfileBtn").addClass("disabled");
             $("input, select").prop("disabled", true);
-            $("#profile-container").fadeTo(100, 0.3, function () { $(this).fadeTo(500, 1.0); });
-            blinking = setInterval(function () {
-                $("#profile-container").fadeTo(100, 0.3, function () { $(this).fadeTo(500, 1.0); });
-            }, 2000);
             let editProfileAttempt = await changeProfile($("#inputName").val(), $("#inputBirth").val(), $("#staticGender").val(), $("#inputAddress").val() === "" ? null : $("#inputAddress").val(), $("#inputPhone").val() === "" ? null : $("#inputPhone").val());
             if (editProfileAttempt) location.reload();
             else {
@@ -81,10 +73,8 @@ export async function initProfilePage() {
             throw err;
         }
         finally {
-            clearInterval(blinking);
             $("#editProfileBtn").removeClass("disabled");
             $("input, select").prop("disabled", false);
-
         }
     }
 
@@ -93,7 +83,5 @@ export async function initProfilePage() {
         $("input, select").attr("disabled", false);
         $("#editProfileBtn").removeClass("btn-warning").addClass("btn-primary").text("Сохранить");
         editBtn.on("click", saveProfile);
-    })
-    
-    $.appear("#profile-container", 700);
+    }) 
 }

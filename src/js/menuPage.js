@@ -8,7 +8,7 @@ export async function initMenu(args, router) {
 	if (args.page < 0) return;
 	let dishesJSON = await getDishes(args);
 	if (dishesJSON === null) {
-		$.get("/src/views/notFoundDishies.html", function (data) {
+		$.get("/src/views/notFoundDishes.html", function (data) {
 			let dishesContainer = $("#dishes-container");
 			dishesContainer.append(data);
 		});
@@ -22,8 +22,8 @@ export async function initMenu(args, router) {
 		initMenu(pages.count);
 		return;
 	}
-	$.get("/src/views/dishCard.html", function (data) {
-		showDishes(dishes, args, data, pages.count);
+	await $.get("/src/views/menuCard.html", async function (data) {
+		await showDishes(dishes, args, data, pages.count);
 	});
 }
 

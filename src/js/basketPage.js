@@ -1,6 +1,8 @@
 import { addBasket, deleteBasket, getBasket, countBasket } from "/src/js/basketAPI.js";
 
 export async function initBasketPage() {
+    $.appear("#basket-container", 700);
+
 	let basketJSON = await getBasket();
 	if (basketJSON === null || basketJSON.length === 0) {
         $("#basket-container").empty();
@@ -49,12 +51,12 @@ export async function itemSetup(newItem, currentItem) {
 		if (value <= 1) {
 			await deleteBasket(currentItem.id);
 			$("#basketBadge").text(`${await countBasket()}`);
-			newItem.remove();
+			location.reload();
 		} else {
-			await deleteBasket(currentItem.id, true);
-			$("#basketBadge").text(`${await countBasket()}`);
 			value--;
 			label.text(`${value}`);
+			await deleteBasket(currentItem.id, true);
+			$("#basketBadge").text(`${await countBasket()}`);
 		}
 	});
 
@@ -65,6 +67,7 @@ export async function itemSetup(newItem, currentItem) {
 		await deleteBasket(currentItem.id);
 		$("#basketBadge").text(`${await countBasket()}`);
 		newItem.remove();
+		location.reload();
 	});
 
 	return newItem;

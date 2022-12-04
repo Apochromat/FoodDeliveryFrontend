@@ -70,9 +70,6 @@ export async function createOrder(time, address) {
 		}),
 	})
 		.then((res) => {
-			if (res.status === 400) {
-				throw new Error("your error message here");
-			}
 			return res.json();
 		})
 		.then((json) => {

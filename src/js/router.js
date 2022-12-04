@@ -6,6 +6,7 @@ import { initDishPage } from "/src/js/dishPage.js";
 import { initBasketPage } from "/src/js/basketPage.js";
 import { initOrdersPage } from "/src/js/ordersPage.js";
 import { initOrderPage } from "/src/js/orderPage.js";
+import { initPurchasePage } from "/src/js/purchasePage.js";
 import { setNavbar } from "/src/js/navbar.js";
 import { countBasket } from "/src/js/basketAPI.js";
 
@@ -13,11 +14,12 @@ import { countBasket } from "/src/js/basketAPI.js";
 let router = {
 	routes: [
 		{ pattern: /^\/404$/, callback: "notfound", nav: [] },
-		{ pattern: /^\/profile$/, callback: "profile", nav: ["profileLink"] },
-		{ pattern: /^\/register$/, callback: "register", nav: [] },
-		{ pattern: /^\/login$/, callback: "login", nav: [] },
-		{ pattern: /^\/cart$/, callback: "cart", nav: [] },
-		{ pattern: /^\/orders$/, callback: "orders", nav: [] },
+		{ pattern: /^\/profile$/, callback: "profile", nav: ["user"] },
+		{ pattern: /^\/register$/, callback: "register", nav: ["registerLink"] },
+		{ pattern: /^\/login$/, callback: "login", nav: ["loginLink"] },
+		{ pattern: /^\/cart$/, callback: "cart", nav: ["cartLink"] },
+		{ pattern: /^\/orders$/, callback: "orders", nav: ["ordersLink"] },
+		{ pattern: /^\/purchase$/, callback: "purchase", nav: [] },
 		{ pattern: /^\/item\/([a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12})$/, callback: "dish", nav: [] },
 		{ pattern: /^\/order\/([a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12})$/, callback: "order", nav: [] },
 		{ pattern: /^\/$/, callback: "menu", nav: ["dishesLink"] },
@@ -33,7 +35,7 @@ let router = {
 					return;
 				}
 				if (pushHistory) history.pushState({}, null, `${path}${search}`);
-				$(".me-auto a").removeClass("active");
+				$(".navbar-nav a").removeClass("active");
 				this.routes[i].nav.forEach((val) => $(`#${val}`).addClass("active"));
 				return;
 			}
@@ -67,11 +69,12 @@ let routerFunctions = {
 
 	notfound: function () {
 		$("main").load("/src/views/notFound.html");
+		return true;
 	},
 
 	menu: function (args, search) {
 		let parsed = searchParse(search);
-		$("main").load("/src/views/dishesContainer.html", () => initMenu(parsed, router));
+		$("main").load("/src/views/menuContainer.html", () => initMenu(parsed, router));
 		return true;
 	},
 
@@ -122,7 +125,7 @@ let routerFunctions = {
 			router.dispatch("/", "");
 			return false;
 		}
-		$("main").load("/src/views/ordersContainer.html", () => initOrdersPage());
+		$("main").load("/src/views/ordersContainer.html", () => initOrdersPage(router));
 		return true;
 	},
 
@@ -134,6 +137,15 @@ let routerFunctions = {
 		$("main").load("/src/views/orderContainer.html", () => initOrderPage(args, router));
 		return true;
 	},
+
+	purchase: function () {
+		if (!router.checkLogin()) {
+			router.dispatch("/", "");
+			return false;
+		}
+		$("main").load("/src/views/purchaseContainer.html", () => initPurchasePage(router));
+		return true;
+	}
 };
 
 $(document).one("DOMContentLoaded", async function () {

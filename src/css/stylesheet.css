@@ -82,3 +82,38 @@ img {
 * {
 	outline: none !important;
 }
+
+ymaps {
+	color: black;
+	border-radius: 5px;
+}
+
+#map {
+	height: 200px;
+}
+
+.pointer {
+	cursor: pointer;
+}
+
+.orderDecreaser .orderLabel {
+	color: #ffffff !important;
+	background-color: #50575d !important;
+	opacity: 1 !important;
+}
+
+.constHeight {
+	max-height: 40vh;
+}
+
+.ibg {
+	object-fit: cover;
+	max-height: 300px;
+}
+
+@media (min-width: 768px) {
+	.ibg {
+		object-fit: cover;
+		max-height: 180px;
+	}
+}

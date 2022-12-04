@@ -2,6 +2,8 @@ import { getOrder, confirmOrder } from "/src/js/orderAPI.js";
 import { zero } from "/src/js/misc.js";
 
 export async function initOrderPage(id, router) {
+    $.appear("#order-container", 700);
+
 	let orderJSON = await getOrder(id);
 	if (orderJSON === null) {
 		router.dispatch("/404", "");

@@ -3,7 +3,7 @@ import { getOrders, getOrder, createOrder, confirmOrder } from "/src/js/orderAPI
 import { zero } from "/src/js/misc.js";
 
 
-export async function initOrdersPage() {
+export async function initOrdersPage(router) {
 	let orderJSON = await getOrders();
 	if (orderJSON === null || orderJSON.length === 0) {
 		$.get("/src/views/notFoundOrders.html", function (data) {
@@ -19,10 +19,14 @@ export async function initOrdersPage() {
 	if (basketJSON !== null && basketJSON.length !== 0) {
 		$("#purchase").toggleClass("d-none", false);
 	}
+	$("#purchaseButt").on("click", (event) => {
+		router.dispatch("/purchase", "");
+	});
 
 	$.get("/src/views/ordersCard.html", function (data) {
 		showItems(orderJSON, data);
 	});
+    $.appear("#order-container", 700);
 }
 
 async function showItems(basketJSON, template) {
