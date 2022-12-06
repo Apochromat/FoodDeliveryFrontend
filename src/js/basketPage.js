@@ -1,14 +1,15 @@
 import { addBasket, deleteBasket, getBasket, countBasket } from "/src/js/basketAPI.js";
 
-export async function initBasketPage() {
-    $.appear("#basket-container", 700);
+export async function initBasketPage(appear = true) {
+	$("#basket-container").empty();
+    if(appear){$.appear("#basket-container", 700);}
 
 	let basketJSON = await getBasket();
 	if (basketJSON === null || basketJSON.length === 0) {
-        $("#basket-container").empty();
+        $("main").empty();
 		$.get("/src/views/notFoundBasket.html", function (data) {
-			let basketContainer = $("#basket-container");
-			basketContainer.append(data);
+			let main = $("main");
+			main.append(data);
 		});
 		return;
 	}
@@ -51,7 +52,7 @@ export async function itemSetup(newItem, currentItem) {
 		if (value <= 1) {
 			await deleteBasket(currentItem.id);
 			$("#basketBadge").text(`${await countBasket()}`);
-			location.reload();
+			initBasketPage(false);
 		} else {
 			value--;
 			label.text(`${value}`);
@@ -67,7 +68,7 @@ export async function itemSetup(newItem, currentItem) {
 		await deleteBasket(currentItem.id);
 		$("#basketBadge").text(`${await countBasket()}`);
 		newItem.remove();
-		location.reload();
+		initBasketPage(false);
 	});
 
 	return newItem;

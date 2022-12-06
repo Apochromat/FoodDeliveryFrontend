@@ -14,18 +14,19 @@ function init() {
 		$("#address").val($("#address").val().trim());
 		geocode();
 	});
-    $('#address').keyup(function(e){
-        if(e.keyCode == 13)
-        {
-            $("#address").val($("#address").val().trim());
-            geocode();
-        }
-    });
+	$("#address").keyup(function (e) {
+		if (e.keyCode == 13) {
+			$("#address").val($("#address").val().trim());
+			geocode();
+		}
+	});
 
 	function geocode() {
 		// Забираем запрос из поля ввода.
 		var request = $("#address").val();
-        if (request.length <= 1) {return}
+		if (request.length <= 1) {
+			return;
+		}
 		// Геокодируем введённые данные.
 		ymaps.geocode(request).then(
 			function (res) {
@@ -69,21 +70,24 @@ function init() {
 				}
 			},
 			function (e) {
-				showError("Повторите попытку");
+				console.log("Повторите попытку");
+				$("#map").toggleClass("d-none", false);
+				$("#address").removeClass("is-invalid");
+				$("#addressWarn").remove();
 			}
 		);
 	}
 
-    function showError(message) {
-        $("#map").toggleClass("d-none", true);
-        $("#address").addClass("is-invalid");
-        $("#addressWarn").remove();
-        $("#address").after(`<p class="text-danger m-0" id="addressWarn">${message}</p>`);
-        if (map) {
-            map.destroy();
-            map = null;
-        }
-    }
+	function showError(message) {
+		$("#map").toggleClass("d-none", true);
+		$("#address").addClass("is-invalid");
+		$("#addressWarn").remove();
+		$("#address").after(`<p class="text-danger m-0" id="addressWarn">${message}</p>`);
+		if (map) {
+			map.destroy();
+			map = null;
+		}
+	}
 
 	function showResult(obj) {
 		// Удаляем сообщение об ошибке, если найденный адрес совпадает с поисковым запросом.

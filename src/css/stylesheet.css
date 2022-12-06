@@ -106,6 +106,14 @@ ymaps {
 	max-height: 40vh;
 }
 
+.fit {
+	object-fit: contain;
+}
+
+.blur {
+	filter: blur(8px);
+}
+
 .ibg {
 	object-fit: cover;
 	max-height: 300px;
@@ -115,5 +123,18 @@ ymaps {
 	.ibg {
 		object-fit: cover;
 		max-height: 180px;
+	}
+}
+
+
+.ibgItem {
+	object-fit: cover;
+	max-height: 360px;
+}
+
+@media (min-width: 768px) {
+	.ibgItem {
+		object-fit: cover;
+		max-height: 480px;
 	}
 }

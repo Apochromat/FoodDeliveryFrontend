@@ -21,7 +21,7 @@ export async function initDishPage(args, router) {
 
 async function setupDish(args, ratingFixed = true) {
     $("#name").text(args.name);
-    $("#image").attr("src", args.image);
+    $(".image").attr("src", args.image);
     $("#category").text(`Категория блюда - ${args.category}`);
     $("#rating").rating({displayOnly: ratingFixed, step: 1, size:"md"});
     $("#rating").rating('update', args.rating);

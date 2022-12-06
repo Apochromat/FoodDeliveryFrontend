@@ -209,9 +209,5 @@ export async function dishSetup(newDish, currentDish, basket) {
 		}
 	});
 
-	newDish.on("click", (event) => {
-		if ($(event.target).prop("tagName") != "BUTTON") newDish.find("a")[0].click();
-	});
-
 	return newDish;
 }

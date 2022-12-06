@@ -3,7 +3,7 @@ import { getOrders, getOrder, createOrder, confirmOrder } from "/src/js/orderAPI
 import { zero } from "/src/js/misc.js";
 
 
-export async function initOrdersPage(router) {
+export async function initOrdersPage(router, appear = true) {
 	let orderJSON = await getOrders();
 	if (orderJSON === null || orderJSON.length === 0) {
 		$.get("/src/views/notFoundOrders.html", function (data) {
@@ -24,20 +24,22 @@ export async function initOrdersPage(router) {
 	});
 
 	$.get("/src/views/ordersCard.html", function (data) {
-		showItems(orderJSON, data);
+		showItems(orderJSON, data, router);
 	});
-    $.appear("#order-container", 700);
+
+	$("#last-orders").empty();
+	if (appear){$.appear("#order-container", 700);}
 }
 
-async function showItems(basketJSON, template) {
+async function showItems(basketJSON, template, router) {
 	let basketContainer = $("#last-orders");
 	basketJSON.forEach(async (curr) => {
-		let newItem = await itemSetup($(template), curr);
+		let newItem = await itemSetup($(template), curr, router);
 		basketContainer.append(newItem);
 	});
 }
 
-export async function itemSetup(newItem, currentItem) {
+export async function itemSetup(newItem, currentItem, router) {
 	let deliveryMessage = "";
 	let date = new Date(currentItem.deliveryTime);
 	const isToday = (someDate) => {
@@ -79,7 +81,7 @@ export async function itemSetup(newItem, currentItem) {
 		let token = localStorage.getItem("jwt");
 		if (!token) return;
 		await confirmOrder(currentItem.id);
-		location.reload()
+		initOrdersPage(router, false);
 	});
 
 	newItem.on("click", (event) => {
