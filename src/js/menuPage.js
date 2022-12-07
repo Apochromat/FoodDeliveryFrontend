@@ -133,8 +133,6 @@ async function showPagination(args, pagination, pages) {
 		pagesElement.find(`#page${activePage}`).addClass("active");
 	}
 	$("#dishes-container").after(pagesElement);
-
-	//$.appear("#dishes-container", 500);
 }
 
 export async function dishSetup(newDish, currentDish, basket) {
@@ -145,7 +143,7 @@ export async function dishSetup(newDish, currentDish, basket) {
 	newDish.find(".rating").rating({ displayOnly: true, step: 1 });
 	newDish.find(".rating").rating("update", currentDish.rating);
 	newDish.find(".desc").text(currentDish.description);
-	newDish.find(".cost").text(`Цена - ${currentDish.price}`);
+	newDish.find(".cost").text(`Цена - ${currentDish.price}руб.`);
 
 	if (currentDish.vegetarian) {
 		newDish.find(".vegetarianIcon").toggleClass("d-none", false);

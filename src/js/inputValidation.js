@@ -71,9 +71,10 @@ function init() {
 			},
 			function (e) {
 				console.log("Повторите попытку");
-				$("#map").toggleClass("d-none", false);
+				$("#map").toggleClass("d-none", true);
 				$("#address").removeClass("is-invalid");
 				$("#addressWarn").remove();
+				run();
 			}
 		);
 	}

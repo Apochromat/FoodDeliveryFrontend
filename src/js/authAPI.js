@@ -104,7 +104,7 @@ export async function registerUser(email, pass, name, address, phone, birth, sex
     }
     return {
         ok: false,
-        msg: "Ошибка сервера",
+        msg: "Ошибка",
         response: response,
     };
 }

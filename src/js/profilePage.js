@@ -1,9 +1,5 @@
 import { getProfileDetails, changeProfile } from "/src/js/profileAPI.js";
-export async function initProfilePage(appear = true) {
-	if (appear) {
-		$.appear("#profile-container", 700);
-	}
-
+export async function initProfilePage() {
 	IMask(document.getElementById("inputPhone"), {
 		mask: "+{7} (000) 000-00-00",
 	});

@@ -1,0 +1,209 @@
+@import "https://unpkg.com/open-props/easings.min.css";
+[data-theme="dark"] body {
+	background-color: #151517;
+}
+
+[data-theme="dark"] .container {
+	color: #ffffff;
+}
+
+[data-theme="dark"] .card {
+	background-color: #212529;
+}
+
+[data-theme="dark"] .card-header {
+	background-color: #1d2023;
+}
+
+[data-theme="dark"] .card-footer {
+	background-color: #1d2023;
+}
+
+[data-theme="dark"] footer {
+	background-color: #151517;
+}
+
+[data-theme="dark"] #pagination > li > a {
+	background-color: #212529;
+	border-color: #212529;
+}
+
+[data-theme="dark"] .card a, [data-theme="dark"] h1, [data-theme="dark"] h5, [data-theme="dark"] input{
+    color:#ffffff;
+}
+
+.card a {
+	color: #000;
+}
+
+[data-theme="dark"] input:not([type='checkbox']), [data-theme="dark"] .form-select {
+    background-color: #212529;
+	color:#ffffff;
+}
+
+[data-theme="dark"] #pagination > li > :focus,
+[data-theme="dark"] #pagination > li > :hover {
+	background-color: #16181b;
+}
+
+[data-theme="dark"] #pagination > .active > a {
+	background-color: #16181b;
+	border: solid 1px #212529;
+}
+
+[data-theme="dark"] #pagination > .active > a:hover {
+	border: solid 1px #4c535b !important;
+}
+
+[data-theme="dark"] .orderDecreaser .orderLabel {
+	color: #ffffff !important;
+	background-color: #1d2023 !important;
+	opacity: 1 !important;
+}
+
+
+/*theme toggle*/
+.sun-and-moon > :is(.moon, .sun, .sun-beams) {
+	transform-origin: center center;
+}
+.sun-and-moon > .sun-beams {
+	stroke-width: 2px;
+}
+[data-theme="dark"] .sun-and-moon > .sun {
+	transform: scale(1.75);
+}
+[data-theme="dark"] .sun-and-moon > .sun-beams {
+	opacity: 0;
+}
+[data-theme="dark"] .sun-and-moon > .moon > circle {
+	transform: translate(-7px);
+}
+@supports (cx: 1) {
+	[data-theme="dark"] .sun-and-moon > .moon > circle {
+		transform: translate(0);
+		cx: 17;
+	}
+}
+@media (prefers-reduced-motion: no-preference) {
+	.sun-and-moon > .sun {
+		transition: transform 0.5s var(--ease-elastic-3);
+	}
+	.sun-and-moon > .sun-beams {
+		transition: transform 0.5s var(--ease-elastic-4), opacity 0.5s var(--ease-3);
+	}
+	.sun-and-moon .moon > circle {
+		transition: transform 0.25s var(--ease-out-5);
+	}
+	@supports (cx: 1) {
+		.sun-and-moon .moon > circle {
+			transition: cx 0.25s var(--ease-out-5);
+		}
+	}
+	[data-theme="dark"] .sun-and-moon > .sun {
+		transform: scale(1.75);
+		transition-timing-function: var(--ease-3);
+		transition-duration: 0.25s;
+	}
+	[data-theme="dark"] .sun-and-moon > .sun-beams {
+		transform: rotate(-25deg);
+		transition-duration: 0.15s;
+	}
+	[data-theme="dark"] .sun-and-moon > .moon > circle {
+		transition-delay: 0.25s;
+		transition-duration: 0.5s;
+	}
+}
+.theme-toggle {
+	width: 32px;
+	height: 32px;
+	background: none;
+	border: none;
+	padding: 0;
+	aspect-ratio: 1;
+	border-radius: 50%;
+	cursor: pointer;
+	touch-action: manipulation;
+	-webkit-tap-highlight-color: transparent;
+	outline-offset: 5px;
+}
+.theme-toggle > svg {
+	inline-size: 100%;
+	block-size: 100%;
+	stroke-linecap: round;
+}
+@media (hover: none) {
+	.theme-toggle {
+		--size: 48px;
+	}
+}
+
+html {
+	color-scheme: light;
+}
+html[data-theme="dark"] {
+	color-scheme: dark;
+}
+@supports not (color-scheme: dark) {
+	html[data-theme="dark"] {
+		background: #111;
+	}
+}
+
+
+.theme-krajee-svg .krajee-icon,
+.theme-krajee-svg .krajee-icon-clear {
+	display: inline-block;
+	width: 2rem;
+	height: 2rem;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+.theme-krajee-svg .clear-rating,
+.theme-krajee-svg .rating-stars {
+	font-size: 5px;
+}
+
+.theme-krajee-svg .filled-stars .krajee-icon-star {
+	background-image: url(/src/img/filled-star.svg);
+}
+
+.theme-krajee-svg.rating-xl .krajee-icon,
+.theme-krajee-svg.rating-xl .krajee-icon-clear {
+	width: 3rem;
+	height: 3rem;
+}
+
+.theme-krajee-svg.rating-lg .krajee-icon,
+.theme-krajee-svg.rating-lg .krajee-icon-clear {
+	width: 2.5rem;
+	height: 2.5rem;
+}
+
+.theme-krajee-svg.rating-md .krajee-icon,
+.theme-krajee-svg.rating-md .krajee-icon-clear {
+   width: 1.4rem;
+   height: 1.4rem;
+}
+
+.theme-krajee-svg.rating-sm .krajee-icon,
+.theme-krajee-svg.rating-sm .krajee-icon-clear {
+	width: 1.5rem;
+	height: 1.5rem;
+}
+
+.theme-krajee-svg.rating-xs .krajee-icon,
+.theme-krajee-svg.rating-xs .krajee-icon-clear {
+	width: 0.9rem;
+	height: 0.9rem;
+}
+
+.theme-krajee-svg.rating-rtl.is-heart .filled-stars {
+	right: 0.02em;
+}
+
+.theme-krajee-svg.rating-rtl.is-heart .empty-stars {
+	margin-right: 0.01em;
+}

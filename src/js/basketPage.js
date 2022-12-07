@@ -1,8 +1,7 @@
 import { addBasket, deleteBasket, getBasket, countBasket } from "/src/js/basketAPI.js";
 
-export async function initBasketPage(appear = true) {
+export async function initBasketPage() {
 	$("#basket-container").empty();
-    if(appear){$.appear("#basket-container", 700);}
 
 	let basketJSON = await getBasket();
 	if (basketJSON === null || basketJSON.length === 0) {
@@ -20,14 +19,14 @@ export async function initBasketPage(appear = true) {
 
 async function showItems(basketJSON, template) {
 	let basketContainer = $("#basket-container");
-	basketJSON.forEach(async (curr) => {
-		let newItem = await itemSetup($(template), curr);
+	basketJSON.forEach(async (curr, index) => {
+		let newItem = await itemSetup($(template), curr, index);
 		basketContainer.append(newItem);
 	});
 }
 
-export async function itemSetup(newItem, currentItem) {
-	newItem.find(".name").text(currentItem.name);
+export async function itemSetup(newItem, currentItem, index) {
+	newItem.find(".name").text(`${index + 1}. ${currentItem.name}`);
 	newItem.find(".image").attr("src", currentItem.image);
 	newItem.find(".cost").text(`Цена: ${currentItem.price}руб./шт`);
 	newItem.find(".orderLabel").text(`${currentItem.amount}`);
@@ -52,7 +51,6 @@ export async function itemSetup(newItem, currentItem) {
 		if (value <= 1) {
 			await deleteBasket(currentItem.id);
 			$("#basketBadge").text(`${await countBasket()}`);
-			initBasketPage(false);
 		} else {
 			value--;
 			label.text(`${value}`);
@@ -68,7 +66,6 @@ export async function itemSetup(newItem, currentItem) {
 		await deleteBasket(currentItem.id);
 		$("#basketBadge").text(`${await countBasket()}`);
 		newItem.remove();
-		initBasketPage(false);
 	});
 
 	return newItem;

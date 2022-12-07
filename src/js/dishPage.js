@@ -1,8 +1,6 @@
 import {checkRating, setRating, getDish} from "/src/js/dishAPI.js"
 
 export async function initDishPage(args, router) {
-    $.appear("#dish-container", 700);
-
     let dishJSON = await getDish(args[0]);
 	if (dishJSON === null || dishJSON.status === "Error") {
 		router.dispatch("/404", "");

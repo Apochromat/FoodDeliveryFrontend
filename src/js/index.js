@@ -6,10 +6,6 @@ $(document).keypress(function (e) {
 	}
 });
 
-$.appear = function (selector, time = 1000) {
-	$(selector).removeClass("d-none").fadeOut(0).show(time);
-};
-
 window.fetch = new Proxy(window.fetch, {
 	apply(fetch, context, args) {
 		let response;

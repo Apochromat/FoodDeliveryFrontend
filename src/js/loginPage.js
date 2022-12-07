@@ -1,7 +1,5 @@
 import { loginUser } from "/src/js/authAPI.js";
 export function initLoginPage() {
-    $.appear("#login-container", 700);
-
     $("#loginBtn").on("click", async () => {
         $("#login").prop("disabled", true);
         $("#password").prop("disabled", true);

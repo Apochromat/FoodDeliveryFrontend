@@ -2,8 +2,6 @@ import { getOrder, confirmOrder } from "/src/js/orderAPI.js";
 import { zero } from "/src/js/misc.js";
 
 export async function initOrderPage(id, router) {
-    $.appear("#order-container", 700);
-
 	let orderJSON = await getOrder(id);
 	if (orderJSON === null) {
 		router.dispatch("/404", "");
@@ -36,11 +34,11 @@ export async function initOrderPage(id, router) {
 }
 
 async function showItems(dishes, template) {
-	let container = $("#dishList");
-	dishes.forEach(async (curr) => {
+	$("#dishList").empty();
+	for (let curr of dishes) {
 		let newItem = await itemSetup($(template), curr);
-		container.append(newItem);
-	});
+		$("#dishList").append(newItem);
+	}
 }
 
 export async function itemSetup(newItem, currentItem) {

@@ -3,12 +3,12 @@ import { getOrders, getOrder, createOrder, confirmOrder } from "/src/js/orderAPI
 import { zero } from "/src/js/misc.js";
 
 
-export async function initOrdersPage(router, appear = true) {
+export async function initOrdersPage(router) {
 	let orderJSON = await getOrders();
 	if (orderJSON === null || orderJSON.length === 0) {
 		$.get("/src/views/notFoundOrders.html", function (data) {
-			let orderContainer = $("#order-container");
-			orderContainer.append(data);
+			$("main").empty();
+			$("main").append(data);
 		});
 	}
 	else {
@@ -28,7 +28,7 @@ export async function initOrdersPage(router, appear = true) {
 	});
 
 	$("#last-orders").empty();
-	if (appear){$.appear("#order-container", 700);}
+	$("#last-orders").append($('<h2 class="col-12">Последние заказы</h2>'));
 }
 
 async function showItems(basketJSON, template, router) {
@@ -81,7 +81,6 @@ export async function itemSetup(newItem, currentItem, router) {
 		let token = localStorage.getItem("jwt");
 		if (!token) return;
 		await confirmOrder(currentItem.id);
-		initOrdersPage(router, false);
 	});
 
 	newItem.on("click", (event) => {

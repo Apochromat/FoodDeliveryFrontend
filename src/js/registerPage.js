@@ -35,7 +35,7 @@ export function initRegisterPage() {
 			if (regAttempt.ok) location.href = "/";
 			else {
 				$("#regWarn").remove();
-				$("#signUpBtn").before(`<p class="text-danger" id="regWarn">${regAttempt.msg}</p>`);
+				$("#signUpBtn").before(`<p class="text-danger mb-0" id="regWarn">${regAttempt.msg}</p>`);
 			}
 		} catch {
 			alert("Ошибка соединения");
@@ -135,6 +135,4 @@ export function initRegisterPage() {
 	$("#birthday").on("change", checkBirthday);
 
 	$("#birthday").attr("max", new Date().toISOString().split("T")[0]);
-
-	$.appear("#register-container", 700);
 }

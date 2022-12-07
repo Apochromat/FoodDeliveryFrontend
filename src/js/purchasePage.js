@@ -4,8 +4,6 @@ import { getProfileDetails, changeProfile } from "/src/js/profileAPI.js";
 import { run } from "/src/js/inputValidation.js";
 
 export async function initPurchasePage(router) {
-	$.appear("#order-container", 700);
-
 	let basketJSON = await getBasket();
 	if (basketJSON === null || basketJSON.length === 0) {
 		router.dispatch("/orders", "");
