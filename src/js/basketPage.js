@@ -2,6 +2,7 @@ import { addBasket, deleteBasket, getBasket, countBasket } from "/src/js/basketA
 
 export async function initBasketPage() {
 	$("#basket-container").empty();
+	$("#basket-container").append($('<h2 class="col-12">Товары в корзине</h2>'));
 
 	let basketJSON = await getBasket();
 	if (basketJSON === null || basketJSON.length === 0) {
