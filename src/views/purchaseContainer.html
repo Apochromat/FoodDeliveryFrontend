@@ -1,0 +1,36 @@
+<div class="card row mx-5 mb-4 container mx-auto shadow rounded p-2 px-0" id="order-container">
+   <h2>Оформление заказа</h2>
+   <div class="card-body">
+      <div id="static" class="row">
+         <h4 class="col-12">Данные покупателя</h4>
+         <div class="form-floating mb-3 col-md-6 d-inline-block my-auto">
+            <input type="text" class="form-control" id="staticPhone" placeholder="+7 (xxx) xxx-xx-xx"
+               disabled>
+            <label for="staticPhone" class="ms-2">Телефон</label>
+         </div>
+         <div class="form-floating mb-3 col-md-6 d-inline-block  my-auto">
+            <input type="email" class="form-control" id="staticEmail" placeholder="name@example.com"
+               disabled>
+            <label for="staticEmail" class="ms-2">Email</label>
+         </div>
+      </div>
+      <div id="active" class="row">
+         <h4>Данные доставки</h4>
+         <div class="form-floating mb-2 col-md-6 d-inline-block">
+            <input type="datetime-local" class="form-control" id="date"
+               placeholder="name@example.com" required>
+            <label for="date" class="ms-2">Время доставки</label>
+         </div>
+         <div class="form-floating mb-2 col-md-6 d-inline-block">
+            <input type="text" class="form-control" id="address" placeholder="name@example.com" required>
+            <label for="address" class="ms-2">Адрес</label>
+         </div>
+      </div>
+      <div class="col-12 d-none p-1 mb-3" id="map">
+      </div>
+      <p class="card-text">Список блюд:</p>
+      <div id="dishList"></div>
+      <p class="card-text mb-1" id="totalPrice">Статус</p>
+      <button type="button" class="btn btn-success" id="purchaseConfirm">Подтвердить заказ</button>
+   </div>
+</div>
